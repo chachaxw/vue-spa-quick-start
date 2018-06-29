@@ -1,58 +1,32 @@
 <template>
-  <div class="hello">
+  <div class="user-info">
     <img src="../../assets/logo.png">
-    <button id="btn">Choose Image</button>
+    <h1>{{msg}}</h1>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import $ from 'zepto-wrapper';
-import wx from 'weixin-js-sdk';
+  export default {
+    name: 'user-info',
+    data() {
+      return {
+        msg: 'Welcome to Your Vue.js App',
+      };
+    },
+    mounted() {
 
-const wechatReady = new Promise(rs => wx.ready(rs));
-$.ajax({
-  url: 'http://192.168.3.4:3000/wechat-config',
-  type: 'GET',
-  success(data) {
-    wx.config(data);
-  }
-})
-export default {
-  name: 'hello',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-    };
-  },
-  mounted() {
-    $('#btn').click(() => {
-      wechatReady.then(() => {
-        wx.chooseImage({
-          count: 9,
-          sizeType: ['original', 'compressed'],
-          sourceType: ['album', 'camera'],
-          success(res) {
-            let localIds = res.localIds;
-            let img = new Image();
-            img.src = localIds[0];
-            $('.hello').append(img);
-          }
-        });
-      });
-    });
-  }
-};
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/flexible';
-img {
-  width: pr(200);
-}
-
-#btn {
-  @include fz(20px);
-}
-
+  @import '../../style/flexible';
+  img {
+    display: block;
+    width: pr(200);
+    margin: pr(400) auto pr(50);
+  }
+  h1 {
+    text-align: center;
+  }
 </style>
